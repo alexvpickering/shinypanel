@@ -1,0 +1,16 @@
+Package: shinyinbtn
+Type: Package
+Title: Shiny inputs with buttons and validation
+Version: 0.1.0
+Author: Alex Pickering
+Maintainer: Alex Pickering <alexvpickering@gmail.com>
+Description: Add shiny inputs with one or more buttons that grow and shrink with inputs. 
+ Also add tooltips to input buttons and styling and messages for input validation.
+License: MIT
+Encoding: UTF-8
+LazyData: true
+RoxygenNote: 7.1.0
+Imports:
+ shinyjs,
+ shiny,
+ shinyBS
