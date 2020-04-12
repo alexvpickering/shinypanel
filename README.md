@@ -10,6 +10,8 @@ remotes::install_github('alexvpickering/shinypanel')
 
 Example control panel with button-attached inputs and tooltips:
 
+![control panel](shinypanel.png)
+
 ```R
 library(shiny)
 library(shinyBS)
@@ -53,5 +55,3 @@ server <- function(input, output, session) {
 
 shinyApp(ui, server)
 ```
-
-![control panel](shinypanel.png)

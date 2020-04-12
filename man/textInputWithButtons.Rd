@@ -10,6 +10,7 @@ textInputWithButtons(
   ...,
   container_id = NULL,
   help_id = NULL,
+  label_title = NULL,
   btn_titletips = TRUE,
   placeholder = ""
 )
@@ -24,6 +25,8 @@ with \code{shinyjs::addClass}.}
 
 \item{help_id}{id for span with class \code{'help-block'} below input (optional). Can be used for add
 error message with \code{shinyjs::html}.}
+
+\item{label_title}{Optional text to appear in info icon tooltip. Used to provide information to user about input.}
 
 \item{btn_titletips}{if \code{TRUE} (default), converts title attributes of \code{actionButtons} into tooltips.}
 

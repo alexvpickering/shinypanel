@@ -12,7 +12,7 @@ selectizeInputWithButtons(
   container_id = NULL,
   help_id = NULL,
   label_title = NULL,
-  btn_tooltips = TRUE,
+  btn_titletips = TRUE,
   btn_placement = NULL,
   hide_btns = FALSE
 )
@@ -35,13 +35,13 @@ error message with \code{shinyjs::html}.}
 
 \item{label_title}{Optional text to appear in info icon tooltip. Used to provide information to user about input.}
 
+\item{btn_titletips}{if \code{TRUE} (default), converts title attributes of \code{actionButtons} into tooltips.}
+
 \item{btn_placement}{Where the \code{actionButton} tooltips should appear (\code{top}, \code{bottom}, \code{left}, \code{right}).
 Defaults to \code{'right'} for dropdown buttons and \code{'bottom'} for all others.}
 
 \item{hide_btns}{If \code{TRUE} styling is adjusted so that all buttons are initially hidden. Can unhide buttons
 using \code{toggleSelectizeButtons}.}
-
-\item{btn_titletips}{if \code{TRUE} (default), converts title attributes of \code{actionButtons} into tooltips.}
 }
 \description{
 selectizeInput with buttons and validation utilities

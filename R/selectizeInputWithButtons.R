@@ -27,15 +27,16 @@ selectizeInputWithButtons <- function(id,
                                       container_id = NULL,
                                       help_id = NULL,
                                       label_title = NULL,
-                                      btn_tooltips = TRUE,
+                                      btn_titletips = TRUE,
                                       btn_placement = NULL,
                                       hide_btns = FALSE) {
 
+
   mult <- isTRUE(options$multiple)
   if(mult) {
-    select_tag <- tags$select(id = id, style = 'display: none', multiple = TRUE)
+    select_tag <- tags$select(id = id, style = 'display: none;', multiple = TRUE)
   } else {
-    select_tag <- tags$select(id = id, style = 'display: none')
+    select_tag <- tags$select(id = id, style = 'display: none;')
   }
 
   buttons <- list(...)
@@ -49,10 +50,10 @@ selectizeInputWithButtons <- function(id,
   if (btn_titletips) {
     button_tooltips <- tags$div(
       lapply(buttons, function(btn) {
-        placement <- ifelse(is.null(placement),
-                            ifelse(any(grepl('dropdown', unlist(btn$attribs))), 'right', 'bottom'),
-                            placement)
-        shinyBS::bsTooltip(id = btn$attribs$id, title = btn$attribs$title, placement = placement, options = list(container = 'body'))
+        btn_placement <- ifelse(is.null(btn_placement),
+                                ifelse(any(grepl('dropdown', unlist(btn$attribs))), 'right', 'bottom'),
+                                btn_placement)
+        shinyBS::bsTooltip(id = btn$attribs$id, title = btn$attribs$title, placement = btn_placement, options = list(container = 'body'))
       })
     )
   }
@@ -72,12 +73,13 @@ selectizeInputWithButtons <- function(id,
 
   options <- ifelse(is.null(options), '{}', jsonlite::toJSON(options, auto_unbox = TRUE))
 
-  tags$div(class = 'form-group selectize-fh', id = container_id,
-           tags$label(class = 'control-label', `for` = id, label),
-           tags$div(class = ig_class, id = paste0(id, '-input-group'),
-                    tags$div(class = fhs_class, id = paste0(id, '-full-height-selectize'),
-                             select_tag,
-                             tags$script(type = 'application/json', `data-for` = id, HTML(options))
+
+  markup <- tags$div(class = 'form-group selectize-fh', id = container_id,
+                tags$label(class = 'control-label', `for` = id, label),
+                tags$div(class = ig_class, id = paste0(id, '-input-group'),
+                         tags$div(class = fhs_class, id = paste0(id, '-full-height-selectize'),
+                        select_tag,
+                        tags$script(type = 'application/json', `data-for` = id, HTML(options))
                     ),
                     lapply(buttons, function(btn) {
                       is_dropdown <- any(grepl('dropdown', unlist(btn$attribs)))
@@ -90,19 +92,78 @@ selectizeInputWithButtons <- function(id,
                         btn$attribs$style <- paste0('display: none;', btn$attribs$style)
 
                       if (!is_dropdown)
-                        btn <- tags$div(class = 'input-group-btn', id = paste0(btn$attribs$id, '-parent'), style = btn$attribs$`parent-style`, btn)
+                        btn <- div(class = 'input-group-btn', id = paste0(btn$attribs$id, '-parent'), style = btn$attribs$`parent-style`, btn)
 
                       # remove title since using tooltips
                       if (btn_titletips) btn$attribs$title <- NULL
 
                       return(btn)
                     })
-           ),
-           tags$span(class = 'help-block', id = help_id),
-           button_tooltips,
-           label_tooltip
+                ),
+                tags$span(class = 'help-block', id = help_id),
+                button_tooltips,
+                label_tooltip
+  )
+
+  with_deps(markup)
+}
+
+with_deps <- function(markup) {
+  addResourcePath(
+    prefix = 'css',
+    directoryPath = system.file('css', package='shinypanel'))
+
+  selectizeDep <- htmltools::htmlDependency(
+    "selectize", "0.11.2", c(href = "shared/selectize"),
+    stylesheet = "css/selectize.bootstrap3.css",
+    head = format(tagList(
+      HTML('<!--[if lt IE 9]>'),
+      tags$script(src = 'shared/selectize/js/es5-shim.min.js'),
+      HTML('<![endif]-->'),
+      tags$script(src = 'shared/selectize/js/selectize.min.js')
+    ))
+  )
+
+  tagList(
+    singleton(tags$head(
+      tags$link(rel = 'stylesheet',
+                type = 'text/css',
+                href = 'css/shinypanel.css')
+    )),
+    htmltools::attachDependencies(markup, selectizeDep)
   )
 }
+
+selectizeIt <- function(inputId, select, options, nonempty = FALSE) {
+  res <- checkAsIs(options)
+
+  selectizeDep <- htmlDependency(
+    "selectize", "0.11.2", c(href = "shared/selectize"),
+    stylesheet = "css/selectize.bootstrap3.css",
+    head = format(tagList(
+      HTML('<!--[if lt IE 9]>'),
+      tags$script(src = 'shared/selectize/js/es5-shim.min.js'),
+      HTML('<![endif]-->'),
+      tags$script(src = 'shared/selectize/js/selectize.min.js')
+    ))
+  )
+
+
+  # Insert script on same level as <select> tag
+  select$children[[2]] <- tagAppendChild(
+    select$children[[2]],
+    tags$script(
+      type = 'application/json',
+      `data-for` = inputId, `data-nonempty` = if (nonempty) '',
+      `data-eval` = if (length(res$eval)) HTML(toJSON(res$eval)),
+      if (length(res$options)) HTML(toJSON(res$options)) else '{}'
+    )
+  )
+
+  attachDependencies(select, selectizeDep)
+}
+
+
 
 #' selectizeInput with validation utilities
 #'
@@ -122,15 +183,17 @@ selectizeInputWithValidation <- function(id, label, options = NULL, container_id
     label <- tags$span(label, span(class='hover-info', span(id = label_id, icon('info', 'fa-fw'))))
   }
 
-  tags$div(class = 'form-group selectize-fh', id = container_id,
-           tags$label(class = 'control-label', `for` = id, label, title = label_title),
-           tags$div(
-             tags$select(id = id, style = 'display: none'),
-             tags$script(type = 'application/json', `data-for` = id, HTML(options))
-           ),
-           tags$span(class = 'help-block', id = help_id),
-           label_tooltip
+  markup <- div(class = 'form-group selectize-fh', id = container_id,
+                tags$label(class = 'control-label', `for` = id, label, title = label_title),
+                div(
+                  tags$select(id = id, style = 'display: none'),
+                  tags$script(type = 'application/json', `data-for` = id, HTML(options))
+                ),
+                tags$span(class = 'help-block', id = help_id),
+                label_tooltip
   )
+
+  with_deps(markup)
 }
 
 
