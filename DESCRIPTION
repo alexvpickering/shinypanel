@@ -1,6 +1,6 @@
-Package: shinyinbtn
+Package: shinypanel
 Type: Package
-Title: Shiny inputs with buttons and validation
+Title: Shiny control panel
 Version: 0.1.0
 Author: Alex Pickering
 Maintainer: Alex Pickering <alexvpickering@gmail.com>
