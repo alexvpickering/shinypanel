@@ -19,7 +19,7 @@ library(shinyBS)
 ui <- fluidPage(
   div(class = 'row',
       div(class = 'col-sm-12 col-lg-6',
-          div(class = 'well-form well-bg',
+          div(class = 'well-form',
               textAreaInputWithButtons(
                 id = 'text', 
                 label = 'Type something:', 
@@ -34,9 +34,6 @@ ui <- fluidPage(
                 options = list(multiple = TRUE)
               )
           )
-      ),
-      div(class = 'col-sm-12 col-lg-6',
-          plotOutput('plot')
       )
   )
 )
