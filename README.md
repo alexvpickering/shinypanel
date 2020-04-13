@@ -14,7 +14,7 @@ Example control panel with button-attached inputs and tooltips:
 
 ```R
 library(shiny)
-library(shinyBS)
+library(shinypanel)
 
 ui <- fluidPage(
   div(class = 'row',
@@ -52,3 +52,4 @@ server <- function(input, output, session) {
 
 shinyApp(ui, server)
 ```
+

@@ -75,92 +75,37 @@ selectizeInputWithButtons <- function(id,
 
 
   markup <- tags$div(class = 'form-group selectize-fh', id = container_id,
-                tags$label(class = 'control-label', `for` = id, label),
-                tags$div(class = ig_class, id = paste0(id, '-input-group'),
-                         tags$div(class = fhs_class, id = paste0(id, '-full-height-selectize'),
-                        select_tag,
-                        tags$script(type = 'application/json', `data-for` = id, HTML(options))
-                    ),
-                    lapply(buttons, function(btn) {
-                      is_dropdown <- any(grepl('dropdown', unlist(btn$attribs)))
+                     tags$label(class = 'control-label', `for` = id, label),
+                     tags$div(class = ig_class, id = paste0(id, '-input-group'),
+                              tags$div(class = fhs_class, id = paste0(id, '-full-height-selectize'),
+                                       select_tag,
+                                       tags$script(type = 'application/json', `data-for` = id, HTML(options))
+                              ),
+                              lapply(buttons, function(btn) {
+                                is_dropdown <- any(grepl('dropdown', unlist(btn$attribs)))
 
 
-                      if (hide_btns & is_dropdown)
-                        btn$children[[1]]$attribs$style <- paste0('display: none;', btn$children[[1]]$attribs$style)
+                                if (hide_btns & is_dropdown)
+                                  btn$children[[1]]$attribs$style <- paste0('display: none;', btn$children[[1]]$attribs$style)
 
-                      if (hide_btns & !is_dropdown)
-                        btn$attribs$style <- paste0('display: none;', btn$attribs$style)
+                                if (hide_btns & !is_dropdown)
+                                  btn$attribs$style <- paste0('display: none;', btn$attribs$style)
 
-                      if (!is_dropdown)
-                        btn <- div(class = 'input-group-btn', id = paste0(btn$attribs$id, '-parent'), style = btn$attribs$`parent-style`, btn)
+                                if (!is_dropdown)
+                                  btn <- div(class = 'input-group-btn', id = paste0(btn$attribs$id, '-parent'), style = btn$attribs$`parent-style`, btn)
 
-                      # remove title since using tooltips
-                      if (btn_titletips) btn$attribs$title <- NULL
+                                # remove title since using tooltips
+                                if (btn_titletips) btn$attribs$title <- NULL
 
-                      return(btn)
-                    })
-                ),
-                tags$span(class = 'help-block', id = help_id),
-                button_tooltips,
-                label_tooltip
+                                return(btn)
+                              })
+                     ),
+                     tags$span(class = 'help-block', id = help_id),
+                     button_tooltips,
+                     label_tooltip
   )
 
   with_deps(markup)
-}
-
-with_deps <- function(markup) {
-  addResourcePath(
-    prefix = 'css',
-    directoryPath = system.file('css', package='shinypanel'))
-
-  selectizeDep <- htmltools::htmlDependency(
-    "selectize", "0.11.2", c(href = "shared/selectize"),
-    stylesheet = "css/selectize.bootstrap3.css",
-    head = format(tagList(
-      HTML('<!--[if lt IE 9]>'),
-      tags$script(src = 'shared/selectize/js/es5-shim.min.js'),
-      HTML('<![endif]-->'),
-      tags$script(src = 'shared/selectize/js/selectize.min.js')
-    ))
-  )
-
-  tagList(
-    singleton(tags$head(
-      tags$link(rel = 'stylesheet',
-                type = 'text/css',
-                href = 'css/shinypanel.css')
-    )),
-    htmltools::attachDependencies(markup, selectizeDep)
-  )
-}
-
-selectizeIt <- function(inputId, select, options, nonempty = FALSE) {
-  res <- checkAsIs(options)
-
-  selectizeDep <- htmlDependency(
-    "selectize", "0.11.2", c(href = "shared/selectize"),
-    stylesheet = "css/selectize.bootstrap3.css",
-    head = format(tagList(
-      HTML('<!--[if lt IE 9]>'),
-      tags$script(src = 'shared/selectize/js/es5-shim.min.js'),
-      HTML('<![endif]-->'),
-      tags$script(src = 'shared/selectize/js/selectize.min.js')
-    ))
-  )
-
-
-  # Insert script on same level as <select> tag
-  select$children[[2]] <- tagAppendChild(
-    select$children[[2]],
-    tags$script(
-      type = 'application/json',
-      `data-for` = inputId, `data-nonempty` = if (nonempty) '',
-      `data-eval` = if (length(res$eval)) HTML(toJSON(res$eval)),
-      if (length(res$options)) HTML(toJSON(res$options)) else '{}'
-    )
-  )
-
-  attachDependencies(select, selectizeDep)
 }
 
 
