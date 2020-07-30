@@ -128,7 +128,7 @@ selectizeInputWithValidation <- function(id, label, options = NULL, container_id
     label <- tags$span(label, span(class='hover-info', span(id = label_id, icon('info', 'fa-fw'))))
   }
 
-  markup <- div(class = 'form-group selectize-fh', id = container_id,
+  markup <- div(class = 'form-group selectize-fh validate-wrapper', id = container_id,
                 tags$label(class = 'control-label', `for` = id, label, title = label_title),
                 div(
                   tags$select(id = id, style = 'display: none'),
