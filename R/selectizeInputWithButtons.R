@@ -74,7 +74,7 @@ selectizeInputWithButtons <- function(id,
   options <- ifelse(is.null(options), '{}', jsonlite::toJSON(options, auto_unbox = TRUE))
 
 
-  markup <- tags$div(class = 'form-group selectize-fh', id = container_id,
+  markup <- tags$div(class = 'form-group selectize-fh validate-wrapper', id = container_id,
                      tags$label(class = 'control-label', `for` = id, label),
                      tags$div(class = ig_class, id = paste0(id, '-input-group'),
                               tags$div(class = fhs_class, id = paste0(id, '-full-height-selectize'),

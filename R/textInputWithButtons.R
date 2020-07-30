@@ -5,7 +5,7 @@
 #' @export
 #'
 textInputWithValidation <- function(id, label, container_id = NULL, help_id = NULL) {
-  markup <- div(class = 'form-group selectize-fh', id = container_id,
+  markup <- div(class = 'form-group selectize-fh validate-wrapper', id = container_id,
                 tags$label(class = 'control-label', `for` = id, label),
                 tags$input(id = id, type = 'text', class = 'form-control shiny-bound-input', value = '', placeholder = ''),
                 tags$span(class='help-block', id = help_id)
@@ -42,7 +42,7 @@ textInputWithButtons <- function(id, label, ..., container_id = NULL, help_id = 
     label <- tags$span(label, span(class='hover-info', span(id = label_id, icon('info', 'fa-fw'))))
   }
 
-  markup <- div(class = 'form-group selectize-fh', id = container_id, class = 'validate-wrapper',
+  markup <- div(class = 'form-group selectize-fh validate-wrapper', id = container_id,
                 tags$label(class = 'control-label', `for` = id, label),
                 div(class = 'input-group',
                     tags$input(id = id, type = 'text', class = 'form-control shiny-bound-input', value = '', placeholder = placeholder),
@@ -88,7 +88,7 @@ textAreaInputWithButtons <- function(id, label, ..., container_id = NULL, help_i
     label <- tags$span(label, span(class='hover-info', span(id = label_id, icon('info', 'fa-fw'))))
   }
 
-  markup <- div(class = 'form-group selectize-fh', id = container_id, class = 'validate-wrapper',
+  markup <- div(class = 'form-group selectize-fh validate-wrapper', id = container_id,
                 tags$label(class = 'control-label', `for` = id, label),
                 div(class = 'input-group full-height-btn',
                     tags$textarea(id = id,
