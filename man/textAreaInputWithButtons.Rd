@@ -5,7 +5,7 @@
 \title{textAreaInput with buttons and validation}
 \usage{
 textAreaInputWithButtons(
-  id,
+  inputId,
   label,
   ...,
   container_id = NULL,
@@ -16,6 +16,8 @@ textAreaInputWithButtons(
 )
 }
 \arguments{
+\item{inputId}{The \code{input} slot that will be used to access the value.}
+
 \item{label}{Display label for the control, or \code{NULL} for no label.}
 
 \item{...}{One or more \code{actionButton}'s to appear to right of input element.}

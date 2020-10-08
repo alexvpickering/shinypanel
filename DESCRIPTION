@@ -1,16 +1,18 @@
 Package: shinypanel
 Type: Package
-Title: Shiny control panel
-Version: 0.1.0
+Title: Shiny Control Panel
+Version: 0.1.2
 Author: Alex Pickering
 Maintainer: Alex Pickering <alexvpickering@gmail.com>
-Description: Add shiny inputs with one or more buttons that grow and shrink with inputs. 
- Also add tooltips to input buttons and styling and messages for input validation.
-License: MIT
+Description: Add shiny inputs with one or more inline buttons that grow and shrink with inputs. 
+ Also add tool tips to input buttons and styling and messages for input validation.
+License: MIT + file LICENSE
 Encoding: UTF-8
 LazyData: true
-RoxygenNote: 7.1.0
+RoxygenNote: 7.1.1
 Imports:
  shinyjs,
  shiny,
- shinyBS
+ shinyBS,
+ htmltools,
+ jsonlite

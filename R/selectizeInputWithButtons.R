@@ -20,7 +20,63 @@ NULL
 #'
 #' @export
 #'
-selectizeInputWithButtons <- function(id,
+#' @examples
+#'
+#' library(shiny)
+#' library(shinypanel)
+#'
+#' ui <- fluidPage(
+#'   div(class = 'row',
+#'       div(class = 'col-sm-12 col-lg-6',
+#'           div(class = 'well-form',
+#'               textAreaInputWithButtons(
+#'                 inputId = 'text',
+#'                 label = 'Type something:',
+#'                 actionButton(
+#'                   'btn3',
+#'                   '',
+#'                   icon('plus', 'fa-fw'),
+#'                   title = 'Click to add something'
+#'                 )
+#'               ),
+#'               selectizeInputWithButtons(
+#'                 inputId = 'selection',
+#'                 label = 'Select something:',
+#'                 label_title = 'Information about input',
+#'                 actionButton(
+#'                   'btn1',
+#'                   '',
+#'                   icon('tag', 'fa-fw'),
+#'                   title = 'this does something'
+#'                 ),
+#'                 actionButton(
+#'                   'btn2',
+#'                   '',
+#'                   icon('chevron-right', 'fa-fw'),
+#'                   title = 'this does something else'
+#'                 ),
+#'                 options = list(multiple = TRUE)
+#'               )
+#'           )
+#'       )
+#'   )
+#' )
+#'
+#'
+#' server <- function(input, output, session) {
+#'
+#'   choices <- reactive({
+#'     paste('Long Option', 1:5)
+#'   })
+#'
+#'   observe({
+#'     updateSelectizeInput(session, 'selection', choices = choices())
+#'   })
+#' }
+#'
+#' # shinyApp(ui, server)
+#'
+selectizeInputWithButtons <- function(inputId,
                                       label,
                                       ...,
                                       options = NULL,
@@ -34,16 +90,16 @@ selectizeInputWithButtons <- function(id,
 
   mult <- isTRUE(options$multiple)
   if(mult) {
-    select_tag <- tags$select(id = id, style = 'display: none;', multiple = TRUE)
+    select_tag <- tags$select(id = inputId, style = 'display: none;', multiple = TRUE)
   } else {
-    select_tag <- tags$select(id = id, style = 'display: none;')
+    select_tag <- tags$select(id = inputId, style = 'display: none;')
   }
 
   buttons <- list(...)
   buttons <- buttons[!sapply(buttons, is.null)]
 
   if (length(buttons) == 0)
-    return(selectizeInputWithValidation(id, label, options, container_id, help_id, label_title))
+    return(selectizeInputWithValidation(inputId, label, options, container_id, help_id, label_title))
 
   # generate tooltips for buttons from titles
   button_tooltips <- NULL
@@ -62,7 +118,7 @@ selectizeInputWithButtons <- function(id,
   # add info icon to label with tooltip
   label_tooltip <- NULL
   if (!is.null(label_title)) {
-    label_id <- paste0(id, '-label-info')
+    label_id <- paste0(inputId, '-label-info')
     label_tooltip <- shinyBS::bsTooltip(label_id, title = label_title, placement = 'top', options = list(container = 'body'))
     label <- tags$span(label, span(class='hover-info', span(id = label_id, icon('info', 'fa-fw'))))
   }
@@ -75,11 +131,11 @@ selectizeInputWithButtons <- function(id,
 
 
   markup <- tags$div(class = 'form-group selectize-fh validate-wrapper', id = container_id,
-                     tags$label(class = 'control-label', `for` = id, label),
-                     tags$div(class = ig_class, id = paste0(id, '-input-group'),
-                              tags$div(class = fhs_class, id = paste0(id, '-full-height-selectize'),
+                     tags$label(class = 'control-label', `for` = inputId, label),
+                     tags$div(class = ig_class, id = paste0(inputId, '-input-group'),
+                              tags$div(class = fhs_class, id = paste0(inputId, '-full-height-selectize'),
                                        select_tag,
-                                       tags$script(type = 'application/json', `data-for` = id, HTML(options))
+                                       tags$script(type = 'application/json', `data-for` = inputId, HTML(options))
                               ),
                               lapply(buttons, function(btn) {
                                 is_dropdown <- any(grepl('dropdown', unlist(btn$attribs)))
@@ -118,21 +174,21 @@ selectizeInputWithButtons <- function(id,
 #'
 #' @export
 #'
-selectizeInputWithValidation <- function(id, label, options = NULL, container_id = NULL, help_id = NULL, label_title = NULL) {
+selectizeInputWithValidation <- function(inputId, label, options = NULL, container_id = NULL, help_id = NULL, label_title = NULL) {
   options <- ifelse(is.null(options), '{}', jsonlite::toJSON(options, auto_unbox = TRUE))
 
   label_tooltip <- NULL
   if (!is.null(label_title)) {
-    label_id <- paste0(id, '-label-info')
+    label_id <- paste0(inputId, '-label-info')
     label_tooltip <- shinyBS::bsTooltip(label_id, title = label_title, placement = 'top', options = list(container = 'body'))
     label <- tags$span(label, span(class='hover-info', span(id = label_id, icon('info', 'fa-fw'))))
   }
 
   markup <- div(class = 'form-group selectize-fh validate-wrapper', id = container_id,
-                tags$label(class = 'control-label', `for` = id, label, title = label_title),
+                tags$label(class = 'control-label', `for` = inputId, label, title = label_title),
                 div(
-                  tags$select(id = id, style = 'display: none'),
-                  tags$script(type = 'application/json', `data-for` = id, HTML(options))
+                  tags$select(id = inputId, style = 'display: none'),
+                  tags$script(type = 'application/json', `data-for` = inputId, HTML(options))
                 ),
                 tags$span(class = 'help-block', id = help_id),
                 label_tooltip

@@ -5,7 +5,7 @@
 \title{selectizeInput with validation utilities}
 \usage{
 selectizeInputWithValidation(
-  id,
+  inputId,
   label,
   options = NULL,
   container_id = NULL,
@@ -14,10 +14,12 @@ selectizeInputWithValidation(
 )
 }
 \arguments{
+\item{inputId}{The \code{input} slot that will be used to access the value.}
+
 \item{label}{Display label for the control, or \code{NULL} for no label.}
 
 \item{options}{A list of options. See the documentation of \pkg{selectize.js}
-for possible options (character option values inside \code{\link[base:I]{base::I()}} will
+for possible options (character option values inside \code{\link[base:AsIs]{base::I()}} will
 be treated as literal JavaScript code; see \code{\link[shiny:renderDataTable]{renderDataTable()}}
 for details).}
 

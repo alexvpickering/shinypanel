@@ -5,7 +5,7 @@
 \title{selectizeInput with buttons and validation utilities}
 \usage{
 selectizeInputWithButtons(
-  id,
+  inputId,
   label,
   ...,
   options = NULL,
@@ -18,12 +18,14 @@ selectizeInputWithButtons(
 )
 }
 \arguments{
+\item{inputId}{The \code{input} slot that will be used to access the value.}
+
 \item{label}{Display label for the control, or \code{NULL} for no label.}
 
 \item{...}{One or more \code{actionButton}'s to appear to right of input element.}
 
 \item{options}{A list of options. See the documentation of \pkg{selectize.js}
-for possible options (character option values inside \code{\link[base:I]{base::I()}} will
+for possible options (character option values inside \code{\link[base:AsIs]{base::I()}} will
 be treated as literal JavaScript code; see \code{\link[shiny:renderDataTable]{renderDataTable()}}
 for details).}
 
@@ -45,6 +47,63 @@ using \code{toggleSelectizeButtons}.}
 }
 \description{
 selectizeInput with buttons and validation utilities
+}
+\examples{
+
+library(shiny)
+library(shinypanel)
+
+ui <- fluidPage(
+  div(class = 'row',
+      div(class = 'col-sm-12 col-lg-6',
+          div(class = 'well-form',
+              textAreaInputWithButtons(
+                inputId = 'text',
+                label = 'Type something:',
+                actionButton(
+                  'btn3',
+                  '',
+                  icon('plus', 'fa-fw'),
+                  title = 'Click to add something'
+                )
+              ),
+              selectizeInputWithButtons(
+                inputId = 'selection',
+                label = 'Select something:',
+                label_title = 'Information about input',
+                actionButton(
+                  'btn1',
+                  '',
+                  icon('tag', 'fa-fw'),
+                  title = 'this does something'
+                ),
+                actionButton(
+                  'btn2',
+                  '',
+                  icon('chevron-right', 'fa-fw'),
+                  title = 'this does something else'
+                ),
+                options = list(multiple = TRUE)
+              )
+          )
+      )
+  )
+)
+
+
+server <- function(input, output, session) {
+
+  choices <- reactive({
+    paste('Long Option', 1:5)
+  })
+
+  observe({
+    updateSelectizeInput(session, 'selection', choices = choices())
+  })
+}
+
+# shinyApp(ui, server)
+
 }
 \seealso{
 \code{\link[shiny]{selectizeInput}}, \code{\link[shinyjs]{html}},

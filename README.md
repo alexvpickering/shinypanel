@@ -21,12 +21,12 @@ ui <- fluidPage(
       div(class = 'col-sm-12 col-lg-6',
           div(class = 'well-form',
               textAreaInputWithButtons(
-                id = 'text', 
+                inputId = 'text', 
                 label = 'Type something:', 
                 actionButton('btn3', '', icon('plus', 'fa-fw'), title = 'Click to add something')
               ),
               selectizeInputWithButtons(
-                id = 'selection',
+                inputId = 'selection',
                 label = 'Select something:',
                 label_title = 'Information about input',
                 actionButton('btn1', '', icon('tag', 'fa-fw'), title = 'this does something'),

@@ -19,7 +19,7 @@ with_deps <- function(markup) {
 
   shinyBSDep <- htmltools::htmlDependency(
     "shinyBS",
-    packageVersion("shinyBS"),
+    utils::packageVersion("shinyBS"),
     src = c("href" = "sbs"),
     script = "shinyBS.js",
     stylesheet = "shinyBS.css")

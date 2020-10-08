@@ -5,17 +5,20 @@
 \title{textInput with buttons and validation}
 \usage{
 textInputWithButtons(
-  id,
+  inputId,
   label,
   ...,
   container_id = NULL,
   help_id = NULL,
   label_title = NULL,
   btn_titletips = TRUE,
-  placeholder = ""
+  placeholder = "",
+  width = NULL
 )
 }
 \arguments{
+\item{inputId}{The \code{input} slot that will be used to access the value.}
+
 \item{label}{Display label for the control, or \code{NULL} for no label.}
 
 \item{...}{One or more \code{actionButton}'s to appear to right of input element.}
@@ -33,8 +36,10 @@ error message with \code{shinyjs::html}.}
 \item{placeholder}{A character string giving the user a hint as to what can
 be entered into the control. Internet Explorer 8 and 9 do not support this
 option.}
+
+\item{width}{The width of the input, e.g. \code{'400px'}, or \code{'100\%'};
+see \code{\link[shiny:reexports]{validateCssUnit()}}.}
 }
 \description{
 textInput with buttons and validation
 }
-\keyword{internal}

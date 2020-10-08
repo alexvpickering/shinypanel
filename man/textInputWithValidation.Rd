@@ -4,9 +4,11 @@
 \alias{textInputWithValidation}
 \title{textInput with validation}
 \usage{
-textInputWithValidation(id, label, container_id = NULL, help_id = NULL)
+textInputWithValidation(inputId, label, container_id = NULL, help_id = NULL)
 }
 \arguments{
+\item{inputId}{The \code{input} slot that will be used to access the value.}
+
 \item{label}{Display label for the control, or \code{NULL} for no label.}
 
 \item{container_id}{id for outer \code{div} (optional). Can use e.g. to add \code{'has-error'} class to style inputs
