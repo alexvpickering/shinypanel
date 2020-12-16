@@ -45,7 +45,7 @@ textInputWithButtons <- function(inputId, label, ..., container_id = NULL, help_
   }
 
   if (!is.null(width)) width <- paste0('width: ', width, ';')
-  markup <- div(class = 'form-group shiny-input-container selectize-fh validate-wrapper', id = container_id, style = width,
+  markup <- div(class = 'form-group selectize-fh validate-wrapper', id = container_id, style = width,
                 tags$label(class = 'control-label', `for` = inputId, label),
                 div(class = 'input-group',
                     tags$input(id = inputId, type = 'text', class = 'form-control', value = '', placeholder = placeholder),
