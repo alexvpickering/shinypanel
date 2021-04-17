@@ -180,27 +180,19 @@
     display: block !important;
 }
 
-/* prevents height increase for multi-item */
-.full-height-selectize .selectize-control,
-.full-height-selectize .item {
+.full-height-selectize .selectize-control{
     margin-bottom: 0;
+}
+
+/* prevents height increase for multi-item */
+.full-height-selectize > .selectize-control.multi .selectize-input > div {
+    margin-bottom: 0px;
 }
 
 /* cursor on same line for multi-item */
 .full-height-selectize > .multi .input {
     top: -7px;
 }
-
-
-/* so that shrinks on mobile
-causes height issues and can't figure out if needed
-
-.full-height-selectize input {
-    width: 100% !important;
-}
-*/
-
-
 
 /* remove ugly box shadow from inputs */
 
@@ -236,4 +228,25 @@ causes height issues and can't figure out if needed
     border: 1px solid #54575a;
     display: inline-block;
     margin-right: 5px;
+}
+
+
+/*ellipses for long selectize input*/
+.selectize-input > *{
+    margin-right: 20px;
+}
+
+
+.selectize-input > *,
+.selectize-dropdown .optgroup-header,
+.selectize-dropdown [data-selectable] {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: block;
+    white-space: nowrap;
+}
+
+/*multi needs inline block to get choices on same line*/
+.selectize-control.multi .selectize-input > div {
+    display: inline-block !important;
 }

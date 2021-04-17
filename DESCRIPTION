@@ -1,7 +1,7 @@
 Package: shinypanel
 Type: Package
 Title: Shiny Control Panel
-Version: 0.1.4
+Version: 0.1.5
 Author: Alex Pickering
 Maintainer: Alex Pickering <alexvpickering@gmail.com>
 Description: Add shiny inputs with one or more inline buttons that grow and shrink with inputs. 
