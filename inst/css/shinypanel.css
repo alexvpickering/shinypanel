@@ -180,16 +180,26 @@
     display: block !important;
 }
 
-.full-height-selectize .selectize-control {
+/* prevents height increase for multi-item */
+.full-height-selectize .selectize-control,
+.full-height-selectize .item {
     margin-bottom: 0;
 }
 
+/* cursor on same line for multi-item */
+.full-height-selectize > .multi .input {
+    top: -7px;
+}
 
-/* so that shrinks on mobile */
+
+/* so that shrinks on mobile
+causes height issues and can't figure out if needed
 
 .full-height-selectize input {
     width: 100% !important;
 }
+*/
+
 
 
 /* remove ugly box shadow from inputs */
