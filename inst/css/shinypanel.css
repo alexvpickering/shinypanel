@@ -190,8 +190,8 @@
 }
 
 /* cursor on same line for multi-item */
-.full-height-selectize > .multi .input {
-    top: -7px;
+.full-height-selectize .multi input {
+    top: -6.5px;
 }
 
 /* remove ugly box shadow from inputs */
