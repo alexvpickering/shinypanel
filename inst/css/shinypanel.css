@@ -190,7 +190,7 @@
 }
 
 /* cursor on same line for multi-item */
-.full-height-selectize .multi input {
+.full-height-selectize > .multi > .selectize-input.has-items > input {
     top: -6.5px;
 }
 
