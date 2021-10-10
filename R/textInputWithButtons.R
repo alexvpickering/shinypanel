@@ -5,10 +5,10 @@
 #'
 #' @export
 #'
-textInputWithValidation <- function(inputId, label, container_id = NULL, help_id = NULL) {
+textInputWithValidation <- function(inputId, label, value = '', container_id = NULL, help_id = NULL) {
   markup <- div(class = 'form-group selectize-fh validate-wrapper', id = container_id,
                 tags$label(class = 'control-label', `for` = inputId, label),
-                tags$input(id = inputId, type = 'text', class = 'form-control', value = '', placeholder = ''),
+                tags$input(id = inputId, type = 'text', class = 'form-control', value = value, placeholder = ''),
                 tags$span(class='help-block', id = help_id)
   )
   with_deps(markup)
@@ -22,7 +22,7 @@ textInputWithValidation <- function(inputId, label, container_id = NULL, help_id
 #'
 #' @export
 #'
-textInputWithButtons <- function(inputId, label, ..., container_id = NULL, help_id = NULL, label_title = NULL, btn_titletips = TRUE, placeholder = '', width = NULL) {
+textInputWithButtons <- function(inputId, label, ..., value = '', container_id = NULL, help_id = NULL, label_title = NULL, btn_titletips = TRUE, placeholder = '', width = NULL) {
 
   buttons <- list(...)
   buttons <- buttons[!sapply(buttons, is.null)]
@@ -48,7 +48,7 @@ textInputWithButtons <- function(inputId, label, ..., container_id = NULL, help_
   markup <- div(class = 'form-group selectize-fh validate-wrapper', id = container_id, style = width,
                 tags$label(class = 'control-label', `for` = inputId, label),
                 div(class = 'input-group',
-                    tags$input(id = inputId, type = 'text', class = 'form-control', value = '', placeholder = placeholder),
+                    tags$input(id = inputId, type = 'text', class = 'form-control', value = value, placeholder = placeholder),
                     tags$span(class = 'input-group-btn',
                               lapply(buttons, function(btn) {
                                 if (btn_titletips) btn$attribs$title <- NULL
