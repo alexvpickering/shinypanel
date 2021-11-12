@@ -242,8 +242,12 @@
 .selectize-dropdown [data-selectable] {
     overflow: hidden;
     text-overflow: ellipsis;
-    display: block;
     white-space: nowrap;
+    vertical-align: bottom;
+}
+
+.selectize-input > * {
+    width: 90%;
 }
 
 /*multi needs inline block to get choices on same line*/
