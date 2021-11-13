@@ -247,7 +247,7 @@
 }
 
 .selectize-input > * {
-    width: 90%;
+    max-width: 90%;
 }
 
 /*multi needs inline block to get choices on same line*/
