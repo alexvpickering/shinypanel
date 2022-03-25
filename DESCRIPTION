@@ -8,7 +8,6 @@ Description: Add shiny inputs with one or more inline buttons that grow and shri
  Also add tool tips to input buttons and styling and messages for input validation.
 License: MIT + file LICENSE
 Encoding: UTF-8
-LazyData: true
 RoxygenNote: 7.1.1
 Imports:
  shinyjs,
