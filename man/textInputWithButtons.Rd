@@ -8,6 +8,7 @@ textInputWithButtons(
   inputId,
   label,
   ...,
+  value = "",
   container_id = NULL,
   help_id = NULL,
   label_title = NULL,
@@ -22,6 +23,8 @@ textInputWithButtons(
 \item{label}{Display label for the control, or \code{NULL} for no label.}
 
 \item{...}{One or more \code{actionButton}'s to appear to right of input element.}
+
+\item{value}{Initial value.}
 
 \item{container_id}{id for outer \code{div} (optional). Can use e.g. to add \code{'has-error'} class to style inputs
 with \code{shinyjs::addClass}.}

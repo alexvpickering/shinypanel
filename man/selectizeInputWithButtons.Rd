@@ -83,7 +83,7 @@ ui <- fluidPage(
                   icon('chevron-right', 'fa-fw'),
                   title = 'this does something else'
                 ),
-                options = list(multiple = TRUE)
+                options = list(create = TRUE)
               )
           )
       )
